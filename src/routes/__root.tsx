@@ -1,10 +1,6 @@
-import {
-  HeadContent,
-  Link,
-  Outlet,
-  Scripts,
-  createRootRoute,
-} from "@tanstack/react-router";
+/// <reference types="vite/client" />
+import { ThemeInit } from ".flowbite-react/init";
+import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ThemeModeScript } from "flowbite-react";
 import * as React from "react";
@@ -52,24 +48,10 @@ export const Route = createRootRoute({
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
-  errorComponent: (props) => {
-    return (
-      <RootDocument>
-        <DefaultCatchBoundary {...props} />
-      </RootDocument>
-    );
-  },
+  errorComponent: DefaultCatchBoundary,
   notFoundComponent: () => <NotFound />,
-  component: RootComponent,
+  shellComponent: RootDocument,
 });
-
-function RootComponent() {
-  return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
-  );
-}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
@@ -79,6 +61,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <ThemeModeScript />
       </head>
       <body className="antialiased">
+        <ThemeInit />
         {children}
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
